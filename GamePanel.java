@@ -46,10 +46,14 @@ public class GamePanel extends JPanel implements ActionListener {
     }
     public void draw(Graphics g) {
         if (running) {
+            /*
+            depending on if you want a grid comment this out or not
             for (int i = 0; i < SCREEN_HEIGHT / OBJECT_SIZE; i++) {
                 g.drawLine(i * OBJECT_SIZE, 0, i * OBJECT_SIZE, SCREEN_HEIGHT);
                 g.drawLine(0, i * OBJECT_SIZE, SCREEN_WIDTH, i * OBJECT_SIZE);
-            }
+                }
+             */
+
             g.setColor(Color.RED);
             g.fillOval(appleX, appleY, OBJECT_SIZE, OBJECT_SIZE);
             for (int i = 0; i < bodyParts; i++) {
@@ -61,6 +65,11 @@ public class GamePanel extends JPanel implements ActionListener {
                     g.fillRect(x[i], y[i], OBJECT_SIZE, OBJECT_SIZE);
                 }
             }
+            g.setColor(Color.RED);
+            g.setFont(new Font("Ink Free",Font.BOLD,45));
+            FontMetrics metrics = getFontMetrics(g.getFont());
+            g.drawString("Score:"+ applesEaten,(SCREEN_WIDTH - metrics.stringWidth("Score:"+ applesEaten))/ 2,g.getFont().getSize());
+
         }else {
             gameOver(g);
         }
@@ -121,11 +130,16 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
     public void gameOver(Graphics g){
+        //Score
+        g.setColor(Color.RED);
+        g.setFont(new Font("Ink Free",Font.BOLD,45));
+        FontMetrics metrics1 = getFontMetrics(g.getFont());
+        g.drawString("Score:"+ applesEaten,(SCREEN_WIDTH - metrics1.stringWidth("Score:"+ applesEaten))/ 2,g.getFont().getSize());
     //Game Over Text
         g.setColor(Color.RED);
         g.setFont(new Font("Ink Free",Font.BOLD,75));
-        FontMetrics metrics = getFontMetrics(g.getFont());
-        g.drawString("Game Over",(SCREEN_WIDTH - metrics.stringWidth("Game Over"))/ 2,SCREEN_HEIGHT/2);
+        FontMetrics metrics2 = getFontMetrics(g.getFont());
+        g.drawString("Game Over",(SCREEN_WIDTH - metrics2.stringWidth("Game Over"))/ 2,SCREEN_HEIGHT/2);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
