@@ -44,23 +44,26 @@ public class GamePanel extends JPanel implements ActionListener {
     super.paintComponent(g);
     draw(g);
     }
-    public void draw(Graphics g){
-    for(int i = 0;i < SCREEN_HEIGHT/OBJECT_SIZE;i++){
-        g.drawLine(i * OBJECT_SIZE,0,i * OBJECT_SIZE,SCREEN_HEIGHT);
-        g.drawLine(0,i * OBJECT_SIZE, SCREEN_WIDTH,i * OBJECT_SIZE);
-    }
-    g.setColor(Color.RED);
-    g.fillOval(appleX,appleY,OBJECT_SIZE,OBJECT_SIZE);
-    for(int i = 0; i < bodyParts; i++){
-        if(i == 0){
-            g.setColor(Color.PINK);
-            g.fillRect(x[i],y[i],OBJECT_SIZE,OBJECT_SIZE);
+    public void draw(Graphics g) {
+        if (running) {
+            for (int i = 0; i < SCREEN_HEIGHT / OBJECT_SIZE; i++) {
+                g.drawLine(i * OBJECT_SIZE, 0, i * OBJECT_SIZE, SCREEN_HEIGHT);
+                g.drawLine(0, i * OBJECT_SIZE, SCREEN_WIDTH, i * OBJECT_SIZE);
+            }
+            g.setColor(Color.RED);
+            g.fillOval(appleX, appleY, OBJECT_SIZE, OBJECT_SIZE);
+            for (int i = 0; i < bodyParts; i++) {
+                if (i == 0) {
+                    g.setColor(Color.PINK);
+                    g.fillRect(x[i], y[i], OBJECT_SIZE, OBJECT_SIZE);
+                } else {
+                    g.setColor(Color.PINK);
+                    g.fillRect(x[i], y[i], OBJECT_SIZE, OBJECT_SIZE);
+                }
+            }
+        }else {
+            gameOver(g);
         }
-        else{
-            g.setColor(Color.PINK);
-            g.fillRect(x[i],y[i],OBJECT_SIZE,OBJECT_SIZE);
-        }
-    }
     }
     public void move(){
         for(int i = bodyParts; i > 0; i--){
@@ -84,7 +87,11 @@ public class GamePanel extends JPanel implements ActionListener {
 
     }
     public void checkApple(){
-
+    if((x[0] == appleX)&& (y[0] == appleY)){
+        bodyParts++;
+        applesEaten++;
+        newApple();
+    }
     }
     public void checkCollision(){
         // head collides with body
@@ -114,7 +121,11 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
     public void gameOver(Graphics g){
-
+    //Game Over Text
+        g.setColor(Color.RED);
+        g.setFont(new Font("Ink Free",Font.BOLD,75));
+        FontMetrics metrics = getFontMetrics(g.getFont());
+        g.drawString("Game Over",(SCREEN_WIDTH - metrics.stringWidth("Game Over"))/ 2,SCREEN_HEIGHT/2);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
