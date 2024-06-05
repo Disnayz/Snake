@@ -37,7 +37,8 @@ public class GamePanel extends JPanel implements ActionListener {
     timer.start();
     }
     public void newApple(){
-
+        appleX = random.nextInt((int)(SCREEN_WIDTH / OBJECT_SIZE)) * OBJECT_SIZE;
+        appleY = random.nextInt((int)(SCREEN_HEIGHT / OBJECT_SIZE)) * OBJECT_SIZE;
     }
     public void paintComponent(Graphics g){
     super.paintComponent(g);
@@ -48,6 +49,8 @@ public class GamePanel extends JPanel implements ActionListener {
         g.drawLine(i * OBJECT_SIZE,0,i * OBJECT_SIZE,SCREEN_HEIGHT);
         g.drawLine(0,i * OBJECT_SIZE, SCREEN_WIDTH,i * OBJECT_SIZE);
     }
+    g.setColor(Color.RED);
+    g.fillOval(appleX,appleY,OBJECT_SIZE,OBJECT_SIZE);
     }
     public void move(){
 
